@@ -1,0 +1,67 @@
+<div class="container">
+  <h1>Movie Search</h1>
+  <div class="col-xs-12 col-md-12">
+    <div class="form-group">
+      <label for="titleInput">Movie title</label>
+      <input type="text" class="form-control" id="titleInput"
+             ng-model="titleInput"
+      >
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div class="form-group">
+      <label for="yearInput">Year</label>
+      <input type="text" class="form-control" id="yearInput"
+             ng-model="year"
+             ng-pattern="/^\d{4}$/" ng-trim="true">
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div class="form-group">
+      <label for="typeInput">Search as</label>
+      <div class="clearfix"></div>
+      <select id="typeInput"
+              ng-model="type"
+              ng-options="name for name in types"
+      >
+      </select>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div class="form-group">
+      <label></label>
+      <input type="button" class="form-control" ng-click="search()" value="Search">
+    </div>
+  </div>
+
+  <table class="table table-striped"
+         infinite-scroll='paginator.nextPage()'
+         infinite-scroll-disabled='paginator.requestData.busy'
+         infinite-scroll-distance='paginator.requestData.step'
+  >
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>IMDB</th>
+      <th>Poster</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat='item in paginator.data'>
+          <td><a target="_blank" href="#single/{{item.imdbID}}">{{item.Title}}</a></td>
+          <td>{{item.Year}}</td>
+          <td>{{item.imdbID}}</td>
+          <td>
+            <a target="_blank" href="#single/{{item.imdbID}}">
+              <img ng-src="{{(item.Poster || '') | poster}}"/>
+            </a>
+          </td>
+
+      </tr>
+    </a>
+    </tbody>
+      <div ng-show='paginator.busy'>Loading data...</div>
+      <div class="has-error" ng-show='paginator.hasError'>Error</div>
+  </table>
+</div>
