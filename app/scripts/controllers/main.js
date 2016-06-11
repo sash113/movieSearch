@@ -19,20 +19,23 @@ angular.module('moviesApp')
     $scope.paginator.requestData = DataProvider.setRequestData('movies');
 
     $scope.search = function () {
-
-        $scope.paginator.id = 'movies';
-        $scope.paginator.reset();
-
         var params = {
             title: $scope.titleInput
         };
-        if($scope.yearInput.length){
-            console.log('Year is valid');
-            params.year = $scope.yearInput;
+        if($scope.yearInput){
+            if($scope.yearInput.length){
+                params.year = $scope.yearInput;
+            }
+        }else{
+
+            return false;
         }
         if($scope.typeInput){
             params.type = $scope.typeInput;
         }
+
+        $scope.paginator.id = 'movies';
+        $scope.paginator.reset();
 
         DataProvider.prepareRequest('movies', params);
         $scope.paginator.nextPage();
